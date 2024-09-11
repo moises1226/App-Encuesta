@@ -12,4 +12,6 @@ public interface IAlimentoService {
 
     public void DeleteAlimento(Long id);
 
+    public List<Long> getAllId();
 }
+

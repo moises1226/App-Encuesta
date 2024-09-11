@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AlimentoService implements IAlimentoService {
@@ -35,5 +36,14 @@ public class AlimentoService implements IAlimentoService {
         alimentoRepository.deleteById(id);
 
     }
+
+    @Override
+    public List<Long> getAllId() {
+        List<Alimento> alimentos = alimentoRepository.findAll();
+        return alimentos.stream()
+                .map(Alimento::getId)  // Utiliza el método getId() de la clase Alumno
+                .collect(Collectors.toList());
+    }
+
 }
 

@@ -17,6 +17,8 @@ public class Alimento {
         @Column(name = "nameDessert")
         private String nameDessert;
 
+        private Integer VisualId;
+
 
     public Long getId() {
         return id;
@@ -50,9 +52,18 @@ public class Alimento {
         this.nameDrink = nameDrink;
     }
 
+    public Integer getVisualId() {
+        return VisualId;
+    }
+
+    public void setVisualId(Integer visualId) {
+        VisualId = visualId;
+    }
+
     @Override
     public String toString() {
-        return "Comida: " + nameFood + ", Bebida: " + nameDrink + ", Postre: " + nameDessert;
+        return "ID Visual: " + VisualId + " | Comida: " + nameFood + ", Bebida: " + nameDrink + ", Postre: " + nameDessert;
     }
+
 
 }

@@ -10,7 +10,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import mos.appencuesta.controller.ComponentsController.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class ViewController {
@@ -37,6 +39,8 @@ public class ViewController {
     private void initialize() {
         // Llama a mostrar cuando se inicialice el controlador
         componentsController.Spinner(DeleteID);
+        getAlimentos();
+        updateVisualIds();
     }
 
 
@@ -52,7 +56,7 @@ public class ViewController {
         fieldFood.clear();
         fieldDrink.clear();
         fieldDessert.clear();
-        getAlimentos();
+        initialize();
 
     }
 
@@ -68,22 +72,62 @@ public class ViewController {
 
 
     @FXML
-    private void deleteAlimentoID(){
-
-        Long id = Long.valueOf(DeleteID.getValue());
-        alimentoService.DeleteAlimento(id);
-        getAlimentos();
-
+    private void deleteAlimentoID() {
+        // Obtén el ID visual a eliminar
+        Integer visualId = DeleteID.getValue();
+         // Encuentra el ID de la base de datos asociado con el ID visual
+        Long idBd = null;
+        var alimentos = listComida.getItems(); // Obtén los elementos actuales del ListView
+        for (Alimento alimento : alimentos) {
+            if (alimento.getVisualId() != null && alimento.getVisualId().equals(visualId)) {
+                idBd = alimento.getId();
+                break;
+            }
+        }
+        if (idBd != null) {
+            // Elimina el alimento usando el ID de la base de datos
+            alimentoService.DeleteAlimento(idBd);
+            initialize();
+        }
     }
+
 
     @FXML
     private void deleteSelectedAlimento() {
         Alimento selectedItem = listComida.getSelectionModel().getSelectedItem(); // Obtén el ítem seleccionado
         if (selectedItem != null) {
+
             alimentoService.DeleteAlimento(selectedItem.getId()); // Elimina por ID de la BD
-            getAlimentos(); // Actualiza la lista después de eliminar
+            initialize();
         }
     }
+
+    @FXML
+    private void updateVisualIds() {
+        List<Long> ids = alimentoService.getAllId(); //traemos los id
+        HashMap<Integer, Long> idSimulacion = new HashMap<>(); //creamos un instancia hashmap
+
+        // Asocia ID visual con ID de base de datos
+        for (int i = 0; i < ids.size(); i++) { //recorremos los ids
+            idSimulacion.put(i + 1, ids.get(i));
+        }
+
+        // Actualiza la lista visual en la interfaz de usuario
+        listComida.getItems().forEach(alimento -> {
+            // Encuentra el ID visual correspondiente
+            for (Map.Entry<Integer, Long> entry : idSimulacion.entrySet()) {
+                if (entry.getValue().equals(alimento.getId())) {
+                    alimento.setVisualId(entry.getKey()); // Asigna el ID visual correcto
+                    break;
+                }
+            }
+        });
+
+        // Refresca el ListView para mostrar los cambios
+        listComida.refresh();
+    }
+
+
 
 
 
