@@ -1,8 +1,10 @@
 package mos.appencuesta.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.layout.Pane;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
@@ -18,6 +20,14 @@ public class ComponentsController {
 
     }
 
+
+    @FXML
+    public void PaneFood(Pane paneMain , Pane paneFood){
+        if (paneMain.isVisible()){
+            paneMain.setVisible(false);
+            paneFood.setVisible(true);
+        }
+    }
 
 
 }

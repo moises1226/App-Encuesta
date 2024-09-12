@@ -23,11 +23,11 @@ public class AppencuestaApplication extends Application {
 		springContext = SpringApplication.run(AppencuestaApplication.class);
 
 		// Configurar el FXMLLoader para usar Spring
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sm.appencuesta/main.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sm.appencuesta/visual.fxml"));
 		fxmlLoader.setControllerFactory(springContext::getBean);  // Inyecta controladores desde el contexto de Spring
 
 		// Cargar la escena y mostrarla
-		var scene = new Scene(fxmlLoader.load(), 640, 610);
+		var scene = new Scene(fxmlLoader.load(), 800, 600);
 		stage.setTitle("Encuesta");
 		stage.setScene(scene);
 		stage.show();

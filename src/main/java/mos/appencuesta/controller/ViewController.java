@@ -2,6 +2,7 @@ package mos.appencuesta.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
 import mos.appencuesta.model.Alimento;
 import mos.appencuesta.service.AlimentoService;
 import org.hibernate.sql.Delete;
@@ -126,6 +127,34 @@ public class ViewController {
         // Refresca el ListView para mostrar los cambios
         listComida.refresh();
     }
+
+    //controlación de vista de pane
+    @FXML
+    private Pane paneMain;
+    @FXML
+    private Pane paneFood;
+    @FXML
+    private Button btnLockerRoom;
+    @FXML
+    private Button btnFood;
+    @FXML
+    private Button btnSport;
+    @FXML
+    private Button btnBack;
+
+    @FXML
+    private void  changePane(){
+        componentsController.PaneFood(paneMain , paneFood);
+    }
+
+    @FXML
+    private void Back(){
+        if (paneFood.isVisible()){
+            paneFood.setVisible(false);
+            paneMain.setVisible(true);
+        }
+    }
+
 
 
 
